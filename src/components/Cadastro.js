@@ -1,38 +1,41 @@
-import styled from "styled-components"
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
+import styled from "styled-components"
 import logo from "../imgs/logo.png"
-import { useNavigate, Link } from "react-router-dom"
 
+export default function Cadastro() {
 
-export default function Login() {
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    let navigate = useNavigate()
+    const [userName, setUserName] = useState("")
+    const [userImg, setUserImg] = useState("")
 
-    function logIn(e) {
+    function registrate(e) {
         e.preventDefault();
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {email: email, password: password})
-
-        promise.then(navigate("/hoje"))
-
-        promise.catch(alert("Usuário não encontrado"))
+        const body = {email: email, name: userName, image: userImg, password: password}
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
+        promise.then(navigate("/"))
+        promise.catch(alert("Rever dados fornecidos"))
     }
 
     return (
-        <LoginContainer>
+        <RegistrationContainer>
             <img src={logo} alt="logo"></img>
-            <form onSubmit={logIn}>
+            <form onSubmit={registrate}>
                 <input type="email" value={email} placeholder="email" required onChange={e => setEmail(e.target.value)}></input>
                 <input type="password" value={password} placeholder="senha" required onChange={(e) => {setPassword(e.target.value)}}></input>
-                <button type="submit">Entrar</button>
+                <input type="name" value={userName} placeholder="nome" required onChange={e => setUserName(e.target.value)}></input>
+                <input type="url" value={userImg} placeholder="foto" required onChange={(e) => {setUserImg(e.target.value)}}></input>
+                <button type="submit">Cadastrar</button>
             </form>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>
-        </LoginContainer>
+            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+        </RegistrationContainer>
     )
 }
 
-const LoginContainer = styled.div`
+const RegistrationContainer = styled.div`
     margin-top: 68px;
     display: flex;
     flex-direction: column;
