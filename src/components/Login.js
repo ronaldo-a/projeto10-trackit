@@ -14,9 +14,9 @@ export default function Login() {
         e.preventDefault();
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {email: email, password: password})
 
-        promise.then(navigate("/hoje"))
+        promise.then((promise) => navigate("/hoje", {state: promise.data}))
 
-        promise.catch(alert("Usuário não encontrado"))
+        promise.catch(() => alert("Usuário não encontrado"))
     }
 
     return (
