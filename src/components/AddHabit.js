@@ -1,14 +1,33 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
+import axios from "axios"
 import styled from "styled-components"
+import Day from "./Day"
+import TokenContext from "../contexts/TokenContext"
 
 export default function AddHabit(props) {
+
+    const {token} = useContext(TokenContext)
+    const selecteds = []
+
+    const days = [{day:"D", dayId:0}, 
+        {day: "S", dayId: 1}, 
+        {day: "T", dayId: 2}, 
+        {day: "Q", dayId: 3}, 
+        {day: "Q", dayId: 4}, 
+        {day: "S", dayId: 5}, 
+        {day: "S", dayId: 6}]
 
     const [newHabit, setNewHabit] = useState("")
 
     function addHabit(e) {
         e.preventDefault()
 
-        props.setMyHabits([...props.myHabits, newHabit])
+        const config = { headers: { Authorization: `Bearer ${token}` } }
+        const body = {name: newHabit, days: selecteds}
+        console.log(body)
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+        promise.then(console.log("ENVIO DO HABITO FOI"))
     }
     
     return (
@@ -16,13 +35,7 @@ export default function AddHabit(props) {
             <form onSubmit={addHabit}>
                 <input type="text" value={newHabit} placeholder="nome do hábito" required onChange={(e) => setNewHabit(e.target.value)}></input>
                 <Days>
-                    <Day>D</Day>
-                    <Day>S</Day>
-                    <Day>T</Day>
-                    <Day>Q</Day>
-                    <Day>Q</Day>
-                    <Day>S</Day>
-                    <Day>S</Day>
+                    {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds}/>)}
                 </Days>
                 <Buttons>
                     <div>Cancelar</div>
@@ -69,22 +82,6 @@ const AddHabitContainer = styled.div`
 const Days = styled.div`
     display: flex;
 
-`
-const Day = styled.div`
-    width: 30px;
-    height: 30px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    margin-right: 4px;
-   
-    border: 1px solid #D5D5D5;
-
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 25px;
-    color: #DBDBDB;
-    text-align: center;
 `
 const Buttons = styled.div`
     display: flex;

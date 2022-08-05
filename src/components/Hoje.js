@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom"
 import styled from "styled-components";
 import logo from "../imgs/logo.png"
 import check from "../imgs/check.png"
+import Footer from "./Footer";
 
 export default function Hoje() {
     let location = useLocation();
@@ -31,6 +32,7 @@ export default function Hoje() {
                     </Habit>
                 </Habits>
             </Body>
+            <Footer />
         </>
     )
 }
@@ -128,7 +130,6 @@ const Text = styled.div`
         color: #666666;
     }
 `
-
 const Checkbox = styled.div`
     width: 69px;
     height: 69px;

@@ -1,7 +1,5 @@
 import styled from "styled-components";
 import logo from "../imgs/logo.png";
-import { useState } from "react";
-import AddHabit from "./AddHabit";
 import MyHabits from "./MyHabits";
 
 
@@ -15,7 +13,6 @@ export default function Habitos () {
             </Top>
             <Body>
                 <MyHabits />
-                <AddHabit />
             </Body>
         </>
     )

@@ -9,7 +9,7 @@ import TokenContext from "../contexts/TokenContext"
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const {setToken} = useContext(TokenContext) 
+    const {setToken} = useContext(TokenContext)
     let navigate = useNavigate()
 
     function logIn(e) {

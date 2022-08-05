@@ -2,6 +2,7 @@ import styled from "styled-components"
 import { useEffect, useState, useContext } from "react"
 import axios from "axios"
 import AddHabit from "./AddHabit"
+import Footer from "./Footer"
 import TokenContext from "../contexts/TokenContext"
 
 export default function MyHabits() {
@@ -9,63 +10,70 @@ export default function MyHabits() {
     const [addHabitCard, setAddHabitCard] = useState(false)
     const [myHabits, setMyHabits] = useState([])
     const {token} = useContext(TokenContext)
+    console.log(token)
 
     useEffect(() => {
         const config = { headers: { Authorization: `Bearer ${token}` } }
 
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
 
-        promise.then(setMyHabits([...myHabits, promise.data]))
-    }, [myHabits])
+        promise.then((promise) => {setMyHabits(promise.data)})
+        console.log(myHabits)
+    }, [])
 
     //UI
-    if (myHabits === [] && addHabitCard === false) {
+    if (myHabits.length === 0 && addHabitCard === false) {
         return (
             <>
                 <MyHabitsContainer>
                     <h6>Meus hábitos</h6>
-                    <button>+</button>
+                    <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </MyHabitsContainer>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                <Footer />
             </>
 
         )
-    } else if (myHabits !== [] && addHabitCard === false) {
+    } else if (myHabits.length !== 0 && addHabitCard === false) {
         return (
             <>
                 <MyHabitsContainer>
                     <h6>Meus hábitos</h6>
-                    <button onclick={() => setAddHabitCard(!addHabitCard)}>+</button>
+                    <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </MyHabitsContainer>
                 <div>
-                    {myHabits.map((habit) => `${habit.name} - ${habit.days[0]}`)}
+                    {myHabits.map((habit) => <div>{habit.name}</div>)}
                 </div>
+                <Footer />
             </>
         )
-    } else if (myHabits === [] && addHabitCard === true) {
+    } else if (myHabits.length === 0 && addHabitCard === true) {
         return (
             <>
                 <MyHabitsContainer>
                     <h6>Meus hábitos</h6>
-                    <button onclick={() => setAddHabitCard(!addHabitCard)}>+</button>
+                    <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </MyHabitsContainer>
                 <AddHabit myHabits={myHabits} setMyHabits={setMyHabits}/>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
+                <Footer />
             </>
         )
     } else {
-        <>
+        return (
+            <>
             <MyHabitsContainer>
                 <h6>Meus hábitos</h6>
-                <button onclick={() => setAddHabitCard(!addHabitCard)}>+</button>
+                <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
             </MyHabitsContainer>
-            <AddHabit />
+            <AddHabit myHabits={myHabits} setMyHabits={setMyHabits}/>
             <div>
-                {myHabits.map((habit) => `${habit.name} - ${habit.days[0]}`)}
+                    {myHabits.map((habit) => <div>{habit.name}</div>)}
             </div>
+            <Footer />
         </>
-    }
-        
+        )
+}
 }
 
 const MyHabitsContainer = styled.div`

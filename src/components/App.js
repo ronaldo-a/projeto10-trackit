@@ -10,11 +10,10 @@ import TokenContext from "../contexts/TokenContext"
 export default function App() {
 
     const [token, setToken] = useState("") 
-    const tokenValue = {token, setToken}
 
     return (
         <BrowserRouter>
-            <TokenContext.Provider value={tokenValue}>
+            <TokenContext.Provider value={{token, setToken}}>
             <Routes>
                 <Route path="/" element={<Login />}> </Route>
                 <Route path="/hoje" element={<Hoje />}> </Route>
