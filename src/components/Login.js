@@ -1,20 +1,24 @@
 import styled from "styled-components"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import axios from "axios"
 import logo from "../imgs/logo.png"
 import { useNavigate, Link } from "react-router-dom"
+import TokenContext from "../contexts/TokenContext"
 
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const {setToken} = useContext(TokenContext) 
     let navigate = useNavigate()
 
     function logIn(e) {
         e.preventDefault();
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {email: email, password: password})
 
-        promise.then((promise) => navigate("/hoje", {state: promise.data}))
+        promise.then((promise) => {
+            setToken(promise.data.token);
+            navigate("/hoje", {state: promise.data})})
 
         promise.catch(() => alert("Usuário não encontrado"))
     }
