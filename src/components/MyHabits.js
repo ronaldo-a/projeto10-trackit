@@ -57,7 +57,7 @@ export default function MyHabits() {
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </Header>
                 <MyHabitsContainer>
-                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} key={habit.id}/>)}
+                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} again={again} setAgain={setAgain} key={habit.id}/>)}
                 </MyHabitsContainer>
                 <Footer />
             </>
@@ -83,7 +83,7 @@ export default function MyHabits() {
             </Header>
             <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard}/>
             <MyHabitsContainer>
-                {myHabits.map((habit) => <Habit name={habit.name} days={habit.days}/>)}
+                {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} again={again} setAgain={setAgain} key={habit.id}/>)}
             </MyHabitsContainer>
             <Footer />
         </>
@@ -121,4 +121,5 @@ const Header = styled.div`
     }
 `
 const MyHabitsContainer = styled.div`
+    overflow-y: scroll;
 `

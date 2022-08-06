@@ -21,7 +21,7 @@ export default function Habit(props) {
             <Days>
                {days.map((day) => <DayContainer dayId={day.dayId} selected={day.selected} key={day.dayId}>{day.day}</DayContainer>)} 
             </Days>
-            <img src={trash} onClick={() => props.deleteHabit(props.id)} alt="deletar hábito"/>
+            <img src={trash} onClick={() => {props.deleteHabit(props.id); props.setAgain(!props.again)}} alt="deletar hábito"/>
         </HabitContainer>
     )
 }

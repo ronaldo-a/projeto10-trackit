@@ -22,12 +22,19 @@ export default function AddHabit(props) {
     function addHabit(e) {
         e.preventDefault()
 
-        const config = { headers: { Authorization: `Bearer ${token}` } }
-        const body = {name: newHabit, days: selecteds}
+        if (selecteds.length !== 0 && newHabit !== "") {
+            const config = { headers: { Authorization: `Bearer ${token}` } }
+            const body = {name: newHabit, days: selecteds}
 
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+            const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
         
-        promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard)})
+            promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard)})
+            promise.catch((error) => console.log(error) )
+        } else {
+            alert("Deve ser selecionado pelo menos um dia")
+        }
+
+        
     }
     
     return (
@@ -38,7 +45,7 @@ export default function AddHabit(props) {
                     {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds}/>)}
                 </Days>
                 <Buttons>
-                    <div>Cancelar</div>
+                    <div onClick={() => props.setAddHabitCard(!props.addHabitCard)}>Cancelar</div>
                     <button type="submit">Salvar</button>
                 </Buttons>
             </form>
@@ -54,6 +61,7 @@ const AddHabitContainer = styled.div`
     background-color: #FFFFFF;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
     position: relative;
     
 
