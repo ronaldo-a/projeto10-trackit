@@ -24,10 +24,10 @@ export default function AddHabit(props) {
 
         const config = { headers: { Authorization: `Bearer ${token}` } }
         const body = {name: newHabit, days: selecteds}
-        console.log(body)
 
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
-        promise.then(console.log("ENVIO DO HABITO FOI"))
+        
+        promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard)})
     }
     
     return (

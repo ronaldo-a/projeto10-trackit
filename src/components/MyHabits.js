@@ -4,6 +4,7 @@ import axios from "axios"
 import AddHabit from "./AddHabit"
 import Footer from "./Footer"
 import TokenContext from "../contexts/TokenContext"
+import Habit from "./Habit"
 
 export default function MyHabits() {
 
@@ -11,24 +12,38 @@ export default function MyHabits() {
     const [myHabits, setMyHabits] = useState([])
     const {token} = useContext(TokenContext)
     console.log(token)
+    const [again, setAgain] = useState(false)
+
+    function deleteHabit(habitId) {
+        const confirmation = prompt(`Se deseja realmente apagar o hábito, digite "sim"`)
+        
+        if (confirmation === "sim" || confirmation === "Sim" || confirmation === "SIM") {
+            const config = { headers: { Authorization: `Bearer ${token}` } }
+
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`, config)
+        
+            promise.then(console.log("DELETOUUU"))
+        }
+    }
 
     useEffect(() => {
+        
         const config = { headers: { Authorization: `Bearer ${token}` } }
 
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
 
         promise.then((promise) => {setMyHabits(promise.data)})
         console.log(myHabits)
-    }, [])
+    }, [again])
 
     //UI
     if (myHabits.length === 0 && addHabitCard === false) {
         return (
             <>
-                <MyHabitsContainer>
+                <Header>
                     <h6>Meus hábitos</h6>
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
-                </MyHabitsContainer>
+                </Header>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 <Footer />
             </>
@@ -37,24 +52,24 @@ export default function MyHabits() {
     } else if (myHabits.length !== 0 && addHabitCard === false) {
         return (
             <>
-                <MyHabitsContainer>
+                <Header>
                     <h6>Meus hábitos</h6>
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
+                </Header>
+                <MyHabitsContainer>
+                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} key={habit.id}/>)}
                 </MyHabitsContainer>
-                <div>
-                    {myHabits.map((habit) => <div>{habit.name}</div>)}
-                </div>
                 <Footer />
             </>
         )
     } else if (myHabits.length === 0 && addHabitCard === true) {
         return (
             <>
-                <MyHabitsContainer>
+                <Header>
                     <h6>Meus hábitos</h6>
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
-                </MyHabitsContainer>
-                <AddHabit myHabits={myHabits} setMyHabits={setMyHabits}/>
+                </Header>
+                <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard}/>
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 <Footer />
             </>
@@ -62,21 +77,21 @@ export default function MyHabits() {
     } else {
         return (
             <>
-            <MyHabitsContainer>
+            <Header>
                 <h6>Meus hábitos</h6>
                 <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
+            </Header>
+            <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard}/>
+            <MyHabitsContainer>
+                {myHabits.map((habit) => <Habit name={habit.name} days={habit.days}/>)}
             </MyHabitsContainer>
-            <AddHabit myHabits={myHabits} setMyHabits={setMyHabits}/>
-            <div>
-                    {myHabits.map((habit) => <div>{habit.name}</div>)}
-            </div>
             <Footer />
         </>
         )
 }
 }
 
-const MyHabitsContainer = styled.div`
+const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -104,4 +119,6 @@ const MyHabitsContainer = styled.div`
         line-height: 34px;
         color: #FFFFFF;
     }
+`
+const MyHabitsContainer = styled.div`
 `
