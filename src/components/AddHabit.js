@@ -44,7 +44,7 @@ export default function AddHabit(props) {
             <form onSubmit={addHabit}>
                 <input type="text" value={props.newHabit} placeholder="nome do hábito" required onChange={(e) => props.setNewHabit(e.target.value)}></input>
                 <Days>
-                    {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds}/>)}
+                    {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds} key={day.dayId}/>)}
                 </Days>
                 <Buttons disabled={disabled}>
                     <div onClick={() => props.setAddHabitCard(!props.addHabitCard)}>Cancelar</div>
