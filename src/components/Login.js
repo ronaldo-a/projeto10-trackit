@@ -37,8 +37,8 @@ export default function Login() {
         <LoginContainer disabled={disabled}>
             <img src={logo} alt="logo"></img>
             <form onSubmit={logIn}>
-                <input type="email" value={email} placeholder="email" required onChange={e => setEmail(e.target.value)}></input>
-                <input type="password" value={password} placeholder="senha" required onChange={(e) => {setPassword(e.target.value)}}></input>
+                <input type="email" disabled={disabled} value={email} placeholder="email" required onChange={e => setEmail(e.target.value)}></input>
+                <input type="password" disabled={disabled} value={password} placeholder="senha" required onChange={(e) => {setPassword(e.target.value)}}></input>
                 <button type="submit" disabled={disabled}>{botao}</button>
             </form>
             <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>

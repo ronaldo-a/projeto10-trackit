@@ -3,17 +3,20 @@ import styled from "styled-components"
 
 export default function Day(props) {
 
+
     const [daySelected, SetDaySelected] = useState(false)
 
     function selectDay () {
-        if (props.selecteds.includes(props.dayId)) {
-            SetDaySelected(false)
-            let index=props.selecteds.indexOf(props.dayId)
-            props.selecteds.splice(index, 1)
-        } else {
-            SetDaySelected(true)
-            props.selecteds.push(props.dayId)
-        }
+        if (props.disabled ===  false) {
+            if (props.selecteds.includes(props.dayId)) {
+                SetDaySelected(false)
+                let index=props.selecteds.indexOf(props.dayId)
+                props.selecteds.splice(index, 1)
+            } else {
+                SetDaySelected(true)
+                props.selecteds.push(props.dayId)
+            }
+        }    
     }
 
 

@@ -5,12 +5,17 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
 import ImgContext from "../contexts/ImgContext";
+import dayjs from 'dayjs'
+import "dayjs/locale/pt-br"
+import updateLocale from "dayjs/plugin/updateLocale";
 
 export default function Hoje() {
 
     const {token} = useContext(TokenContext)
     const {img} = useContext(ImgContext)
     const [todayHabits, setTodayHabits] = useState([])
+    let counter = 0
+    let text = ""
     const [update, setUpdate] = useState(false)
 
     useEffect(() => {
@@ -20,6 +25,27 @@ export default function Hoje() {
 
         promise.then((promise) => {setTodayHabits(promise.data)})
     }, [update])
+
+    dayjs.extend(updateLocale);
+    dayjs.updateLocale("pt-br", {
+        weekdays: [
+            "Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"
+        ]
+    })
+    const day = dayjs().locale("pt-br").format("dddd, DD/MM");
+    
+    //Porcentagem de atividades diárias concluídas
+    for (let i=0; i < todayHabits.length; i++) {
+        if (todayHabits[i].done === true) {
+            counter = counter + 1
+        } 
+    }
+    
+    if (counter === 0) {
+        text = "Nenhum hábito concluído ainda"
+    } else {
+        text = `${(counter/todayHabits.length)*100}% dos hábitos concluídos`
+    }
     
     return (
         <>
@@ -27,9 +53,9 @@ export default function Hoje() {
                 <p>TrackIt</p>
                 <img src={img} alt="user"/>
             </Top>
-            <Body>
-                <h6>Segunda, 18/09</h6>
-                <p>Nenhum hábito concluído ainda</p>
+            <Body text={text.length}>
+                <h6>{day}</h6>
+                <p>{text}</p>
                 <Habits>
                     {todayHabits.map((habit) => <TodayHabit name={habit.name} 
                     done={habit.done} 
@@ -95,7 +121,7 @@ const Body = styled.div`
         font-size: 18px;
         font-weight: 400;
         line-height: 22px;
-        color: #BABABA;
+        color: ${props => {if (props.text <= 27) {return "#8FC549"} else {return "#BABABA"}}}
     }
 `
 const Habits = styled.div`

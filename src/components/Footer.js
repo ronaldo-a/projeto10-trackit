@@ -10,7 +10,7 @@ export default function Footer() {
     
     return (
         <FooterContainer>
-            <Link to="/habitos"><div>Hábitos</div></Link>
+            <Link to="/habitos" style={{textDecoration: "none"}}><div>Hábitos</div></Link>
             <div style={{ width: 91, height: 91, marginBottom: 40}}>
             <Link to="/hoje">
             <CircularProgressbar
@@ -52,5 +52,6 @@ const FooterContainer = styled.div`
         line-height: 22px;
         color: #52B6FF;
         text-align: center;
+        text-decoration: none;
     }
 `

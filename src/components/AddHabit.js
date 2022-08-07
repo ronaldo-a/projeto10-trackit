@@ -42,9 +42,9 @@ export default function AddHabit(props) {
     return (
         <AddHabitContainer addHabitCard={props.addHabitCard} disabled={disabled}>
             <form onSubmit={addHabit}>
-                <input type="text" value={props.newHabit} placeholder="nome do hábito" required onChange={(e) => props.setNewHabit(e.target.value)}></input>
+                <input type="text" disabled={disabled} value={props.newHabit} placeholder="nome do hábito" required onChange={(e) => props.setNewHabit(e.target.value)}></input>
                 <Days>
-                    {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds} key={day.dayId}/>)}
+                    {days.map((day) => <Day disabled={disabled} day={day.day} dayId={day.dayId} selecteds={selecteds} key={day.dayId}/>)}
                 </Days>
                 <Buttons disabled={disabled}>
                     <div onClick={() => props.setAddHabitCard(!props.addHabitCard)}>Cancelar</div>
