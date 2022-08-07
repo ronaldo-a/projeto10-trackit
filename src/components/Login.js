@@ -4,32 +4,42 @@ import axios from "axios"
 import logo from "../imgs/logo.png"
 import { useNavigate, Link } from "react-router-dom"
 import TokenContext from "../contexts/TokenContext"
+import ImgContext from "../contexts/ImgContext"
+import { ThreeDots } from "react-loader-spinner"
 
 
 export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [botao, setBotao] = useState("Entrar")
     const {setToken} = useContext(TokenContext)
+    const {setImg} = useContext(ImgContext)
+    const [disabled, setDisabled] = useState(false)
     let navigate = useNavigate()
 
     function logIn(e) {
         e.preventDefault();
+
+        setBotao(<ThreeDots color="#FFFFFF" height={50} width={50}/>)
+        setDisabled(true)
+        
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {email: email, password: password})
 
         promise.then((promise) => {
             setToken(promise.data.token);
+            setImg(promise.data.image);
             navigate("/hoje", {state: promise.data})})
 
-        promise.catch(() => alert("Usuário não encontrado"))
+        promise.catch((promise) => {alert(promise.response.data.message); setBotao("Entrar"); setDisabled(false)})
     }
 
     return (
-        <LoginContainer>
+        <LoginContainer disabled={disabled}>
             <img src={logo} alt="logo"></img>
             <form onSubmit={logIn}>
                 <input type="email" value={email} placeholder="email" required onChange={e => setEmail(e.target.value)}></input>
                 <input type="password" value={password} placeholder="senha" required onChange={(e) => {setPassword(e.target.value)}}></input>
-                <button type="submit">Entrar</button>
+                <button type="submit" disabled={disabled}>{botao}</button>
             </form>
             <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>
         </LoginContainer>
@@ -62,6 +72,7 @@ const LoginContainer = styled.div`
         box-sizing: border-box;
         padding-left: 11px;
         margin-bottom: 6px;
+        background-color: ${props => {if (props.disabled === true) {return "#D4D4D4"} else {return "#FFFFFF"}}};
 
         border: 1px solid #D5D5D5;
         border-radius: 5px;
@@ -78,8 +89,12 @@ const LoginContainer = styled.div`
     button {
         width: 303px;
         height: 43px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         background-color: #52B6FF;
+        opacity: ${props => {if (props.disabled === true) {return 0.7}}};
         border-radius: 5px;
         border: none;
 

@@ -11,6 +11,7 @@ export default function Habit(props) {
         {day: "S", dayId: 5, selected: false}, 
         {day: "S", dayId: 6, selected: false}]
 
+    // eslint-disable-next-line    
     days.map((day => {for (let i=0; i < props.days.length; i++) {
         if (day.dayId === props.days[i]) {day.selected = true}
     }}))
@@ -21,7 +22,7 @@ export default function Habit(props) {
             <Days>
                {days.map((day) => <DayContainer dayId={day.dayId} selected={day.selected} key={day.dayId}>{day.day}</DayContainer>)} 
             </Days>
-            <img src={trash} onClick={() => {props.deleteHabit(props.id); props.setAgain(!props.again)}} alt="deletar hábito"/>
+            <img src={trash} onClick={() => {props.deleteHabit(props.id)}} alt="deletar hábito"/>
         </HabitContainer>
     )
 }

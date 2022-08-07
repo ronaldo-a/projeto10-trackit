@@ -6,10 +6,7 @@ import Footer from "./Footer";
 
 export default function Hoje() {
     let location = useLocation();
-
-    console.log(location)
-
-
+    
     return (
         <>
             <Top>

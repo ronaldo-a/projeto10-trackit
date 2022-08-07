@@ -1,4 +1,4 @@
-import { useState, useContext } from "react"
+import { useContext } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import Day from "./Day"
@@ -7,7 +7,7 @@ import TokenContext from "../contexts/TokenContext"
 export default function AddHabit(props) {
 
     const {token} = useContext(TokenContext)
-    const selecteds = []
+    let selecteds = []
 
     const days = [{day:"D", dayId:0}, 
         {day: "S", dayId: 1}, 
@@ -17,30 +17,26 @@ export default function AddHabit(props) {
         {day: "S", dayId: 5}, 
         {day: "S", dayId: 6}]
 
-    const [newHabit, setNewHabit] = useState("")
-
     function addHabit(e) {
         e.preventDefault()
 
-        if (selecteds.length !== 0 && newHabit !== "") {
+        if (selecteds.length !== 0 && props.newHabit !== "") {
             const config = { headers: { Authorization: `Bearer ${token}` } }
-            const body = {name: newHabit, days: selecteds}
+            const body = {name: props.newHabit, days: selecteds}
 
             const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
         
-            promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard)})
+            promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard); props.setNewHabit(""); selecteds=[]})
             promise.catch((error) => console.log(error) )
         } else {
             alert("Deve ser selecionado pelo menos um dia")
         }
-
-        
     }
     
     return (
-        <AddHabitContainer>
+        <AddHabitContainer addHabitCard={props.addHabitCard}>
             <form onSubmit={addHabit}>
-                <input type="text" value={newHabit} placeholder="nome do hábito" required onChange={(e) => setNewHabit(e.target.value)}></input>
+                <input type="text" value={props.newHabit} placeholder="nome do hábito" required onChange={(e) => props.setNewHabit(e.target.value)}></input>
                 <Days>
                     {days.map((day) => <Day day={day.day} dayId={day.dayId} selecteds={selecteds}/>)}
                 </Days>
@@ -63,7 +59,6 @@ const AddHabitContainer = styled.div`
     margin-right: auto;
     margin-bottom: 30px;
     position: relative;
-    
 
     box-sizing: border-box;
     padding: 18px;

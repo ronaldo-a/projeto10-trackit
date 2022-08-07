@@ -14,10 +14,14 @@ export default function Cadastro() {
 
     function registrate(e) {
         e.preventDefault();
-        const body = {email: email, name: userName, image: userImg, password: password}
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body)
-        promise.then(navigate("/"))
-        promise.catch(alert("Rever dados fornecidos"))
+
+        const body = {email: email, name: userName, image: userImg, password: password};
+        
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
+        
+        promise.then(() => navigate("/"));
+
+        promise.catch((promise) => alert(promise.response.data.message))
     }
 
     return (

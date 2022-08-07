@@ -1,15 +1,17 @@
 import styled from "styled-components";
-import logo from "../imgs/logo.png";
 import MyHabits from "./MyHabits";
-
+import { useContext } from "react";
+import ImgContext from "../contexts/ImgContext";
 
 export default function Habitos () {
+
+    const {img} = useContext(ImgContext)
 
     return (
         <>
             <Top>
                 <p>TrackIt</p>
-                <img src={logo} alt="user"/>
+                <img src={img} alt="user"/>
             </Top>
             <Body>
                 <MyHabits />
@@ -48,6 +50,8 @@ const Top = styled.div`
         width: 51px;
         height: 51px;
         border-radius: 98px;
+
+        object-fit: cover;
     }
 `
 const Body = styled.div`

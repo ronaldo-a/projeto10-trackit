@@ -14,8 +14,6 @@ export default function Day(props) {
             SetDaySelected(true)
             props.selecteds.push(props.dayId)
         }
-         
-        console.log(props.selecteds)
     }
 
 

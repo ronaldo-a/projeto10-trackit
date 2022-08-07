@@ -9,9 +9,9 @@ import Habit from "./Habit"
 export default function MyHabits() {
 
     const [addHabitCard, setAddHabitCard] = useState(false)
+    const [newHabit, setNewHabit] = useState("")
     const [myHabits, setMyHabits] = useState([])
     const {token} = useContext(TokenContext)
-    console.log(token)
     const [again, setAgain] = useState(false)
 
     function deleteHabit(habitId) {
@@ -22,7 +22,7 @@ export default function MyHabits() {
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`, config)
         
-            promise.then(console.log("DELETOUUU"))
+            promise.then(() => {console.log("DELETOUUU"); setAgain(!again)})
         }
     }
 
@@ -34,6 +34,7 @@ export default function MyHabits() {
 
         promise.then((promise) => {setMyHabits(promise.data)})
         console.log(myHabits)
+        // eslint-disable-next-line
     }, [again])
 
     //UI
@@ -57,7 +58,7 @@ export default function MyHabits() {
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </Header>
                 <MyHabitsContainer>
-                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} again={again} setAgain={setAgain} key={habit.id}/>)}
+                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} key={habit.id}/>)}
                 </MyHabitsContainer>
                 <Footer />
             </>
@@ -69,7 +70,7 @@ export default function MyHabits() {
                     <h6>Meus hábitos</h6>
                     <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
                 </Header>
-                <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard}/>
+                <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard} newHabit={newHabit} setNewHabit={setNewHabit} />
                 <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 <Footer />
             </>
@@ -77,16 +78,16 @@ export default function MyHabits() {
     } else {
         return (
             <>
-            <Header>
-                <h6>Meus hábitos</h6>
-                <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
-            </Header>
-            <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard}/>
-            <MyHabitsContainer>
-                {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} again={again} setAgain={setAgain} key={habit.id}/>)}
-            </MyHabitsContainer>
-            <Footer />
-        </>
+                <Header>
+                    <h6>Meus hábitos</h6>
+                    <button onClick={() => setAddHabitCard(!addHabitCard)}>+</button>
+                </Header>
+                <AddHabit again={again} setAgain={setAgain} setAddHabitCard={setAddHabitCard} addHabitCard={addHabitCard} newHabit={newHabit} setNewHabit={setNewHabit} />
+                <MyHabitsContainer>
+                    {myHabits.map((habit) => <Habit name={habit.name} days={habit.days} id={habit.id} deleteHabit={deleteHabit} key={habit.id}/>)}
+                </MyHabitsContainer>
+                <Footer />
+            </>
         )
 }
 }
