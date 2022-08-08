@@ -27,7 +27,7 @@ export default function Cadastro() {
         
         promise.then(() => navigate("/"));
 
-        promise.catch((promise) => {alert(promise.response.data.message); setDisabled(false)})
+        promise.catch((promise) => {alert(promise.response.data.message); setDisabled(false); setBotao("Cadastrar")})
     }
 
     return (
