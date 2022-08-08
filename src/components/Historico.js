@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import MyHabits from "./MyHabits";
-import { useContext } from "react";
-import ImgContext from "../contexts/ImgContext";
+import styled from "styled-components"
+import { useContext } from "react"
+import ImgContext from "../contexts/ImgContext"
+import Footer from "./Footer"
 
-export default function Habitos () {
+export default function Historico() {
 
     const {img} = useContext(ImgContext)
 
@@ -14,12 +14,14 @@ export default function Habitos () {
                 <img src={img} alt="user"/>
             </Top>
             <Body>
-                <MyHabits />
+                <Header>
+                    <h6>Histórico</h6>
+                </Header>
+                    <p>Em breve você poderá ver o histórico dos seus hábitos aqui!</p>
             </Body>
+            <Footer />
         </>
     )
-        
-        
 }
 
 const Top = styled.div`
@@ -51,16 +53,26 @@ const Top = styled.div`
         width: 51px;
         height: 51px;
         border-radius: 98px;
+    }
+`
+const Header = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
 
-        object-fit: cover;
+    h6 {
+        font-family: 'Lexend Deca', sans-serif;
+        font-size: 23px;
+        font-weight: 400;
+        line-height: 28px;
+        color: #126BA5;
     }
 `
 const Body = styled.div`
     height: 100vh;
     background-color: #E5E5E5;
-    padding-top: 98px;
-    padding-left: 17px;
-    padding-right: 17px;
+    padding: 98px 0 0 18px;
 
     p {
         font-family: 'Lexend Deca', sans-serif;

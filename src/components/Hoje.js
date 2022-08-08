@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import TokenContext from "../contexts/TokenContext";
 import ImgContext from "../contexts/ImgContext";
+import ProgressContext from "../contexts/ProgressContext";
 import dayjs from 'dayjs'
 import "dayjs/locale/pt-br"
 import updateLocale from "dayjs/plugin/updateLocale";
@@ -13,6 +14,7 @@ export default function Hoje() {
 
     const {token} = useContext(TokenContext)
     const {img} = useContext(ImgContext)
+    const {progress, setProgress} = useContext(ProgressContext)
     const [todayHabits, setTodayHabits] = useState([])
     let counter = 0
     let text = ""
@@ -38,13 +40,14 @@ export default function Hoje() {
     for (let i=0; i < todayHabits.length; i++) {
         if (todayHabits[i].done === true) {
             counter = counter + 1
-        } 
+        }
+        setProgress(Math.round((counter/todayHabits.length)*100))
     }
     
     if (counter === 0) {
         text = "Nenhum hábito concluído ainda"
     } else {
-        text = `${(counter/todayHabits.length)*100}% dos hábitos concluídos`
+        text = `${progress}% dos hábitos concluídos`
     }
     
     return (
@@ -78,6 +81,7 @@ const Top = styled.div`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
 
     background-color: #126BA5;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
@@ -103,9 +107,9 @@ const Top = styled.div`
     }
 `
 const Body = styled.div`
-    height: 100vh;
+    height: 100vmax;
     background-color: #E5E5E5;
-    padding: 0 18px;
+    padding: 98px 17px 0 17px;
 
     h6 {
         font-family: 'Lexend Deca', sans-serif;
@@ -113,7 +117,6 @@ const Body = styled.div`
         font-weight: 400;
         line-height: 28px;
         color: #126BA5;
-        margin-top: 98px;
     }
 
     p {

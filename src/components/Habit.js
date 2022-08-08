@@ -32,15 +32,13 @@ const HabitContainer = styled.div`
     min-height: 91px;
     border-radius: 5px;
     background-color: #FFFFFF;
-    margin-left: auto;
-    margin-right: auto;
+    
     margin-bottom: 10px;
     position: relative;
     
 
     box-sizing: border-box;
     padding: 13px;
-
 
     p {
         font-family: 'Lexend Deca', sans-serif;
@@ -57,6 +55,7 @@ const HabitContainer = styled.div`
         position: absolute;
         top: 11px;
         right: 10px;
+        cursor: pointer; 
     }
 `
 const Days = styled.div`

@@ -41,7 +41,7 @@ export default function Login() {
                 <input type="password" disabled={disabled} value={password} placeholder="senha" required onChange={(e) => {setPassword(e.target.value)}}></input>
                 <button type="submit" disabled={disabled}>{botao}</button>
             </form>
-            <Link to="/cadastro"><p>Não tem uma conta? Cadastre-se</p></Link>
+            <Link to="/cadastro" style={{textDecoration: "none"}}><p>Não tem uma conta? Cadastre-se</p></Link>
         </LoginContainer>
     )
 }
@@ -92,6 +92,7 @@ const LoginContainer = styled.div`
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
 
         background-color: #52B6FF;
         opacity: ${props => {if (props.disabled === true) {return 0.7}}};

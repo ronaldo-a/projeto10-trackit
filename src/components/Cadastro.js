@@ -40,7 +40,7 @@ export default function Cadastro() {
                 <input type="url" value={userImg} placeholder="foto" required onChange={(e) => {setUserImg(e.target.value)}}></input>
                 <button type="submit">{botao}</button>
             </form>
-            <Link to="/"><p>Já tem uma conta? Faça login!</p></Link>
+            <Link to="/" style={{textDecoration: "none"}}><p>Já tem uma conta? Faça login!</p></Link>
         </RegistrationContainer>
     )
 }

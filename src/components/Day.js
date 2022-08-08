@@ -31,7 +31,9 @@ const DayContainer = styled.div`
     background-color: ${props => {if (props.selected === true) {return "#CFCFCF"} else {return "#FFFFFF"}}};
     border-radius: 5px;
     margin-right: 4px;
-   
+    
+    cursor: pointer;
+
     border: 1px solid #D5D5D5;
 
     font-family: 'Lexend Deca', sans-serif;

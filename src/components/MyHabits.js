@@ -15,14 +15,14 @@ export default function MyHabits() {
     const [again, setAgain] = useState(false)
 
     function deleteHabit(habitId) {
-        const confirmation = prompt(`Se deseja realmente apagar o hábito, digite "sim"`)
+        let confirmation = window.confirm(`Deseja realmente apagar o hábito?`);
         
-        if (confirmation === "sim" || confirmation === "Sim" || confirmation === "SIM") {
+        if (confirmation === true) {
             const config = { headers: { Authorization: `Bearer ${token}` } }
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`, config)
         
-            promise.then(() => {console.log("DELETOUUU"); setAgain(!again)})
+            promise.then(() => {setAgain(!again)})
         }
     }
 
@@ -96,7 +96,6 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 98px;
     margin-bottom: 28px;
 
     h6 {
@@ -119,8 +118,8 @@ const Header = styled.div`
         font-weight: 400;
         line-height: 34px;
         color: #FFFFFF;
+        cursor: pointer;
     }
 `
 const MyHabitsContainer = styled.div`
-    overflow-y: scroll;
 `
