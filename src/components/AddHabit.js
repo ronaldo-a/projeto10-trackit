@@ -36,6 +36,8 @@ export default function AddHabit(props) {
             promise.catch((error) => {alert(error.response.data.message); setDisabled(false); setBotao("Salvar")} )
         } else {
             alert("Deve ser selecionado pelo menos um dia")
+            setDisabled(false)
+            setBotao("Salvar")
         }
     }
     
