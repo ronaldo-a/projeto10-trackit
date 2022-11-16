@@ -10,11 +10,18 @@ export default function Day(props) {
         if (props.disabled ===  false) {
             if (props.selecteds.includes(props.dayId)) {
                 SetDaySelected(false)
-                let index=props.selecteds.indexOf(props.dayId)
-                props.selecteds.splice(index, 1)
+                const selectedsNew = [...props.selecteds]
+                const index = selectedsNew.indexOf(props.dayId)
+                selectedsNew.splice(index, 1)
+                props.setSelecteds(selectedsNew)
+                //const index = props.selecteds.indexOf(props.dayId)
+                //props.selecteds.splice(index, 1)
             } else {
                 SetDaySelected(true)
-                props.selecteds.push(props.dayId)
+                const selectedsNew = [...props.selecteds]
+                selectedsNew.push(props.dayId)
+                props.setSelecteds(selectedsNew)
+                //props.selecteds.push(props.dayId)
             }
         }    
     }

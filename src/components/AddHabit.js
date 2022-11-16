@@ -10,7 +10,7 @@ export default function AddHabit(props) {
     const [disabled, setDisabled] = useState(false)
     const [botao, setBotao] = useState("Salvar")
     const token = getToken();
-    let selecteds = []
+    const [selecteds, setSelecteds] = useState([])
 
     const days = [{day:"D", dayId:0}, 
         {day: "S", dayId: 1}, 
@@ -32,7 +32,7 @@ export default function AddHabit(props) {
 
             const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
         
-            promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard); props.setNewHabit(""); selecteds=[]; setDisabled(false); setBotao("Salvar")})
+            promise.then(() => {props.setAgain(!props.again); props.setAddHabitCard(!props.addHabitCard); props.setNewHabit(""); setSelecteds([]); setDisabled(false); setBotao("Salvar")})
             promise.catch((error) => {alert(error.response.data.message); setDisabled(false); setBotao("Salvar")} )
         } else {
             alert("Deve ser selecionado pelo menos um dia")
@@ -46,7 +46,7 @@ export default function AddHabit(props) {
             <form onSubmit={addHabit}>
                 <input type="text" disabled={disabled} value={props.newHabit} placeholder="nome do hábito" required onChange={(e) => props.setNewHabit(e.target.value)}></input>
                 <Days>
-                    {days.map((day) => <Day disabled={disabled} day={day.day} dayId={day.dayId} selecteds={selecteds} key={day.dayId}/>)}
+                    {days.map(day => <Day setSelecteds={setSelecteds} disabled={disabled} day={day.day} dayId={day.dayId} selecteds={selecteds} key={day.dayId}/>)}
                 </Days>
                 <Buttons disabled={disabled}>
                     <div onClick={() => props.setAddHabitCard(!props.addHabitCard)}>Cancelar</div>
