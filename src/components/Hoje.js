@@ -3,17 +3,16 @@ import TodayHabit from "./TodayHabit";
 import Footer from "./Footer";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import TokenContext from "../contexts/TokenContext";
-import ImgContext from "../contexts/ImgContext";
 import ProgressContext from "../contexts/ProgressContext";
 import dayjs from 'dayjs'
 import "dayjs/locale/pt-br"
 import updateLocale from "dayjs/plugin/updateLocale";
+import { getToken } from "../services/checkToken";
+import Top from "./Top";
 
 export default function Hoje() {
 
-    const {token} = useContext(TokenContext)
-    const {img} = useContext(ImgContext)
+    const token = getToken();
     const {progress, setProgress} = useContext(ProgressContext)
     const [todayHabits, setTodayHabits] = useState([])
     let counter = 0
@@ -52,10 +51,7 @@ export default function Hoje() {
     
     return (
         <>
-            <Top>
-                <p>TrackIt</p>
-                <img src={img} alt="user"/>
-            </Top>
+            <Top />
             <Body text={text.length}>
                 <h6>{day}</h6>
                 <p>{text}</p>
@@ -75,37 +71,6 @@ export default function Hoje() {
     )
 }
 
-const Top = styled.div`
-    width: 100vw;
-    height: 70px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-
-    background-color: #126BA5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    padding: 0 18px;
-    justify-content: space-between;
-
-    p {
-        font-family: 'Playball', cursive;
-        font-size: 39px;
-        font-weight: 400;
-        line-height: 49px;
-        color: #FFFFFF;
-    }
-
-    img {
-        width: 51px;
-        height: 51px;
-        border-radius: 98px;
-    }
-`
 const Body = styled.div`
     height: 100vmax;
     background-color: #E5E5E5;

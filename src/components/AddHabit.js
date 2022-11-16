@@ -1,15 +1,15 @@
-import { useContext, useState } from "react"
+import { useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import Day from "./Day"
 import { ThreeDots } from "react-loader-spinner"
-import TokenContext from "../contexts/TokenContext"
+import { getToken } from "../services/checkToken"
 
 export default function AddHabit(props) {
 
     const [disabled, setDisabled] = useState(false)
     const [botao, setBotao] = useState("Salvar")
-    const {token} = useContext(TokenContext)
+    const token = getToken();
     let selecteds = []
 
     const days = [{day:"D", dayId:0}, 

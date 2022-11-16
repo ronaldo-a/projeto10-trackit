@@ -1,23 +1,23 @@
 import styled from "styled-components"
-import { useEffect, useState, useContext } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import AddHabit from "./AddHabit"
 import Footer from "./Footer"
-import TokenContext from "../contexts/TokenContext"
 import Habit from "./Habit"
+import { getToken } from "../services/checkToken"
 
 export default function MyHabits() {
 
     const [addHabitCard, setAddHabitCard] = useState(false)
     const [newHabit, setNewHabit] = useState("")
     const [myHabits, setMyHabits] = useState([])
-    const {token} = useContext(TokenContext)
+    const token = getToken();
     const [again, setAgain] = useState(false)
 
     function deleteHabit(habitId) {
         let confirmation = window.confirm(`Deseja realmente apagar o hábito?`);
         
-        if (confirmation === true) {
+        if (confirmation) {
             const config = { headers: { Authorization: `Bearer ${token}` } }
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`, config)
@@ -33,7 +33,6 @@ export default function MyHabits() {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
 
         promise.then((promise) => {setMyHabits(promise.data)})
-        console.log(myHabits)
         // eslint-disable-next-line
     }, [again])
 

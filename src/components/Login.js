@@ -1,10 +1,8 @@
 import styled from "styled-components"
-import { useState, useContext } from "react"
+import { useState } from "react"
 import axios from "axios"
 import logo from "../imgs/logo.png"
 import { useNavigate, Link } from "react-router-dom"
-import TokenContext from "../contexts/TokenContext"
-import ImgContext from "../contexts/ImgContext"
 import { ThreeDots } from "react-loader-spinner"
 
 
@@ -12,8 +10,6 @@ export default function Login() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [botao, setBotao] = useState("Entrar")
-    const {setToken} = useContext(TokenContext)
-    const {setImg} = useContext(ImgContext)
     const [disabled, setDisabled] = useState(false)
     let navigate = useNavigate()
 
@@ -26,8 +22,8 @@ export default function Login() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {email: email, password: password})
 
         promise.then((promise) => {
-            setToken(promise.data.token);
-            setImg(promise.data.image);
+            localStorage.setItem("token", promise.data.token);
+            localStorage.setItem("img", promise.data.image);
             navigate("/hoje", {state: promise.data})})
 
         promise.catch((promise) => {alert(promise.response.data.message); setBotao("Entrar"); setDisabled(false)})

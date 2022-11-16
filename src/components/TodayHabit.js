@@ -1,13 +1,13 @@
 import check from "../imgs/check.png"
 import styled from "styled-components"
 import axios from "axios"
-import { useContext, useState } from "react"
-import TokenContext from "../contexts/TokenContext"
+import { useState } from "react"
+import { getToken } from "../services/checkToken"
 
 export default function TodayHabit(props) {
 
     const [checked, setChecked] = useState(props.done)
-    const {token} = useContext(TokenContext)
+    const token = getToken();
 
     function checkHabit() {
 
