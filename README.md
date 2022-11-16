@@ -16,11 +16,11 @@ Personal habits tracker app. Create, update and delete habits you want to introd
 
 <h3>Technologies</h3>
 
-  Javascript, Axios, Styled Components, Dayjs, React Circular Progress Bar and React Loader Spinner. 
+  Javascript, Axios, Styled Components, Dayjs, React Circular Progress Bar and React Loader Spinner and Vercel. 
 
 <h3>How to run</h3>
 
-  Access 
+  Access https://projeto10-trackit-ronaldo-a.vercel.app/
   
   or:
 
