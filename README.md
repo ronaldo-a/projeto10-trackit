@@ -1,4 +1,4 @@
-# trackit
+# ![logo](https://user-images.githubusercontent.com/107090327/202070997-a3aa174f-1c14-4867-b50c-3bf12a94e9c9.png)
 Personal habits tracker app. Create, update and delete habits you want to introduce in your routine and see the ones you are succesfully maintaning, as the ones you must take a better look at. 
 
 # about
